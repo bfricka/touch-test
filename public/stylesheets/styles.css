@@ -9534,7 +9534,7 @@ a.badge:focus {
 .swipe-menu-left input.search-field {
   width: 90%;
   padding: 10px 12px;
-  line-height: 1;
+  line-height: 1.2;
 }
 /* line 57, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
 .swipe-transition {
