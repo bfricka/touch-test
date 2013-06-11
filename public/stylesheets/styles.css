@@ -7542,7 +7542,14 @@ a.badge:focus {
     padding-bottom: 40px;
   }
 }
-/* line 8, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
+@media (max-width: 979px) {
+  /* line 9, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
+  body {
+    padding-top: 40px;
+    padding-bottom: 30px;
+  }
+}
+/* line 15, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
 .pinch-zoom {
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
@@ -7551,7 +7558,7 @@ a.badge:focus {
   overflow: hidden;
   z-index: 1;
 }
-/* line 14, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
+/* line 21, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
 .swipe-menu-zone {
   position: fixed;
   width: 50px;
@@ -7561,7 +7568,7 @@ a.badge:focus {
   background: rgba(0, 145, 255, 0.08);
   z-index: 2;
 }
-/* line 24, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
+/* line 31, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
 .swipe-menu-left {
   position: fixed;
   width: 70%;
@@ -7579,7 +7586,7 @@ a.badge:focus {
   -o-transform: translate3d(-100%, 0, 0);
   transform: translate3d(-100%, 0, 0);
 }
-/* line 37, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
+/* line 44, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
 .swipe-menu-left > ol {
   list-style: none;
   color: white;
@@ -7589,12 +7596,12 @@ a.badge:focus {
   font-size: 18px;
   text-align: center;
 }
-/* line 46, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
+/* line 53, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
 .swipe-menu-left > ol > li {
   display: block;
   margin-bottom: 5px;
 }
-/* line 52, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
+/* line 59, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
 .swipe-menu-left .btn,
 .swipe-menu-left .search-field {
   -webkit-box-sizing: border-box;
@@ -7605,18 +7612,18 @@ a.badge:focus {
   line-height: 48px;
   font-size: 18px;
 }
-/* line 61, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
+/* line 68, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
 .swipe-menu-left .btn.search-btn {
   width: 10%;
   line-height: 50px;
 }
-/* line 66, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
+/* line 73, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
 .swipe-menu-left input.search-field {
   width: 90%;
   padding: 10px 12px;
   line-height: 1.2;
 }
-/* line 73, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
+/* line 80, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
 .tap-transition,
 .swipe-transition {
   -webkit-transition: all 0.3s;
@@ -7625,24 +7632,24 @@ a.badge:focus {
   transition: all 0.3s;
 }
 @media (max-width: 767px) {
-  /* line 79, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
+  /* line 86, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
   .hero-unit {
     font-size: 16px;
   }
-  /* line 81, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
+  /* line 88, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
   .hero-unit li {
     line-height: 22px;
     padding-bottom: 5px;
   }
-  /* line 82, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
+  /* line 89, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
   .hero-unit h1 {
     font-size: 40px;
   }
-  /* line 85, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
+  /* line 92, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
   .swipe-menu-left {
     padding: 10px;
   }
-  /* line 88, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
+  /* line 95, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
   .swipe-menu-left .btn,
   .swipe-menu-left input.search-field {
     padding: 0 8px;
@@ -7650,12 +7657,12 @@ a.badge:focus {
     line-height: 38px;
     font-size: 14px;
   }
-  /* line 96, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
+  /* line 103, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
   .swipe-menu-left input.search-field {
     line-height: 1;
     width: 84%;
   }
-  /* line 98, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
+  /* line 105, /Users/brian/Sites/ATT/touch-test/public/stylesheets/app/main.less */
   .swipe-menu-left .btn.search-btn {
     line-height: 39px;
     width: 16%;
