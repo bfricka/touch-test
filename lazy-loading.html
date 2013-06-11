@@ -10,6 +10,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="public/stylesheets/styles.css" media="all">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js"></script>
     <script src="public/javascripts/vendor/mootools/mootools.js"></script>
     <script src="public/javascripts/vendor/mootools/CSSEvents.js"></script>
     <script src="public/javascripts/vendor/hammer.js"></script>
@@ -25,7 +26,7 @@
     <!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
 
     <div class="container-fluid">
-      <div id="swipe-menu-zone" class="swipe-menu-zone"></div>
+      <!-- <div id="swipe-menu-zone" class="swipe-menu-zone"></div> -->
       <nav class="swipe-menu-left" id="swipe-menu">
         <ol>
           <li>
@@ -41,27 +42,21 @@
         </ol>
       </nav>
 
-      <!-- Main hero unit for a primary marketing message or call to action -->
-      <div class="hero-unit">
-        <h1>Touch Test!</h1>
-        <p>
-          <ul>
-            <li>Drag right from blue "drag zone" to pull open the side menu. Drag left on the menu to close it.</li>
-            <li>Swipe works from these zones also.</li>
-            <li>Notice the "elastic zone" as well.</li>
-            <li>Click to move the image around. Hold shift for simulated multi-touch to transform it.</li>
-            <li>Double-click / Double-tap to reset the image.</li>
-          </ul>
-        </p>
-      </div>
+      <section class="card-container row-fluid" data-bind="foreach: { data: cards, as: 'card' }">
+        <article class="card">
+          <figure class="card-image" data-bind="style: { 'background-image': 'url(' + card.categoryImageUrl + ')' }"></figure>
+<!--           <img data-bind="attr: { src: card.categoryImageUrl, alt: card.categoryTitle }" /> -->
+          <p class="title" data-bind="text: card.categoryTitle"></p>
+          <p>Rating: <span data-bind="text: card.assetRating"></span></p>
+        </article>
+      </section>
 
-      <div id="pinch-zoom" class="pinch-zoom">
-        <div>
-          <img id="touch-img" class="touch-img" src="public/img/tp-mapped.jpg" alt="Torrey Pines" ondragstart="return false" width="2688" height="1800" />
-        </div>
-      </div>
+      <section class="row-fluid">
+        <h1 class="span12">Window width: <span id="win-width"></span></h1>
+      </section>
 
     </div> <!-- /container -->
-    <script src="public/javascripts/events.js"></script>
+    <script src="public/javascripts/cards.js"></script>
+    <script src="public/javascripts/lazy-loading.js"></script>
   </body>
 </html>

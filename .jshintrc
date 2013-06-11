@@ -20,11 +20,9 @@
   , "laxcomma" : true
   , "laxbreak" : true
   , "globals"  : {
-      "_"          : true
-    , "$"          : true
-    , "app"        : true
-    , "jQuery"     : true
-    , "amplify"    : true
-    , "angular"    : true
+    "_"    : true
+    , "$"  : true
+    , "$$" : true
+    , "ko" : true
   }
 }
