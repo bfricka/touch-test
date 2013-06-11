@@ -29,7 +29,6 @@ module.exports = function(grunt) {
 
     , paths: {
         js: './public/javascripts'
-      , jsApp: './public/javascripts/app'
       , test: './test'
       , styles: './public/stylesheets'
     }
@@ -67,7 +66,10 @@ module.exports = function(grunt) {
           , report: 'gzip'
           , mangle: { except: dontMangle }
         }
-        , files: { "<%= paths.js %>/app.min.js": [ "<%= paths.js %>/app.js" ] }
+        , files: { 
+          "<%= paths.js %>/events.min.js": [ "<%= paths.js %>/events.js" ],
+          "<%= paths.js %>/viewport.min.js": [ "<%= paths.js %>/viewport.js" ]
+        }
       }
     }
 
