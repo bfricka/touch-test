@@ -138,6 +138,7 @@ body {
 }
 
 .card {
+	color: #333;
 	width: 18.799%;
 	height: 350px;
 	padding: 10px;
@@ -163,8 +164,8 @@ body {
 	width: 100%;
 	height: 280px;
 	border-radius: 3px 3px 0 0;
-	-webkit-background-size: contain;
-	background-size: contain;
+	// -webkit-background-size: contain;
+	// background-size: contain;
 	background-position: center center;
 	background-repeat: no-repeat;
 	background-color: #ddd;
@@ -173,4 +174,20 @@ body {
 
 @media(min-width: 1600px) {
 	.card { width: 15.492957746478876%; }
+}
+
+@media(max-width: 1200px) {
+	.card { width: 23.943661971830988%; }
+}
+
+@media(max-width: 979px) {
+	.card { width: 32.3943661971831%; }
+}
+
+@media(max-width: 767px) {
+	.card { width: 49.29577464788733%; }
+}
+
+@media(max-width: 480px) {
+	.card { width: 100%; }
 }

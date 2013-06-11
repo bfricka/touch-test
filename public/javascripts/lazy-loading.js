@@ -5,7 +5,7 @@
 
 	ko.applyBindings(new CardViewModel());
 
-	var winWidth = $('win-width');
+	var winWidth = $('win-width').set('text', window.innerWidth);
 	window.addEvent('resize', function(){
 		winWidth.set('text', window.innerWidth);
 	});
