@@ -5,6 +5,22 @@
   }
 }
 
+.pinch-zoom {
+	.translate3d(0,0,0);
+	overflow: hidden;
+	z-index: 1;
+}
+
+.swipe-menu-zone {
+	position: fixed;
+	width: 50px;
+	height: 100%;
+	left: 0;
+	top: 0;
+	background: hsla(206, 100%, 50%, 0.08);
+	z-index: 2;
+}
+
 .swipe-menu-left {
 	position: fixed;
 	width: 70%;
@@ -13,6 +29,7 @@
 	top: 0;
 	background: #444;
 	padding: 20px;
+	z-index: 2;
 
 	.box-sizing(border-box);
 	.translate3d(-100%, 0, 0);
@@ -54,6 +71,7 @@
 	}
 }
 
+.tap-transition,
 .swipe-transition {
 	.transition(all 0.3s);
 }
@@ -74,4 +92,11 @@
 			line-height: 38px + 1px;
 		}
 	}
+}
+
+.translate3d-and-scale3d(@translate: ~"0,0,0", @scale: ~"1,1,1") {
+  -webkit-transform: translate3d(@translate) scale3d(@scale);
+     -moz-transform: translate3d(@translate) scale3d(@scale);
+       -o-transform: translate3d(@translate) scale3d(@scale);
+          transform: translate3d(@translate) scale3d(@scale);
 }
