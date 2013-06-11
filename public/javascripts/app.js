@@ -1,9 +1,9 @@
 /* global Hammer */
 (function(){
   var nav = document.querySelector(".swipe-menu-left")
-  , navWidth = nav.offsetWidth
-  , hBody = window.hBody = Hammer(document.body, { dragMinDistance: 20 })
-  , startPosition = -navWidth;
+    , navWidth = nav.offsetWidth
+    , hBody = window.hBody = Hammer(document.body, { dragMinDistance: 20 })
+    , startPosition = -navWidth;
 
   hBody.on('dragright', function(evt){
     var enabled = checkEvtEnabled(evt);
@@ -14,7 +14,7 @@
     if (distance >= navWidth || startPosition === 0) return;
     var xVal = distance + startPosition;
     xVal = xVal >= 0 ? 0 : xVal;
-    
+
     translateX(nav, xVal);
   });
 
@@ -26,7 +26,7 @@
     if (distance >= navWidth || startPosition === -navWidth) return;
     var xVal = startPosition - distance;
     xVal = xVal <= -navWidth ? -navWidth : xVal;
-    
+
     translateX(nav, xVal);
   });
 
