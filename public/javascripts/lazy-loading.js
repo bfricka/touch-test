@@ -58,6 +58,10 @@
 		}
 	});
 
+	function setTransition() {
+
+	}
+
 	function addTransition(el, slow) {
 		var duration = slow ? "300ms" : "600ms";
 		el.style.webkitTransitionDuration = duration;
@@ -115,16 +119,17 @@
 			translateX(slider, posX);
 		};
 
-		this.isActive = function(idx) {
-			if (idx >= this.startIdx() && idx <= this.endIdx()) {
-				return true;
-			}
+		this.isActive = function(card, idx) {
+			if (card.active) return true;
+			card.active = (idx >= this.startIdx() && idx <= this.endIdx()) ? true : false;
 
-			return false;
+			return card.active;
 		};
 
 		this.cardImageUrl = function(card, idx) {
-			return this.isActive(idx()) ? card.categoryImageUrl : this.loaderUrl;
+			var active = this.isActive(card, idx());
+
+			return active ? card.categoryImageUrl : this.loaderUrl;
 		};
 	}
 
