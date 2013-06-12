@@ -68,7 +68,6 @@
 	});
 
 	// Add active to cards
-	window.cards.forEach(function(card){ card.active = false; });
 	var cardFullWidth = 0;
 
 	function CardViewModel() {

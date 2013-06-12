@@ -11658,10 +11658,10 @@ body {
 }
 /* line 89, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
 .slide-transition {
-  -webkit-transition: all ease-in-out 0.8s;
-  -moz-transition: all ease-in-out 0.8s;
-  -o-transition: all ease-in-out 0.8s;
-  transition: all ease-in-out 0.8s;
+  -webkit-transition: all ease-out 1s;
+  -moz-transition: all ease-out 1s;
+  -o-transition: all ease-out 1s;
+  transition: all ease-out 1s;
 }
 /* line 93, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
 .tap-transition,
