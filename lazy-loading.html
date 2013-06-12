@@ -42,17 +42,19 @@
         </ol>
       </nav>
 
-      <section class="card-container row-fluid" data-bind="foreach: { data: cards, as: 'card' }">
-        <article class="card">
-          <figure class="card-image" data-bind="style: { 'background-image': 'url(' + card.categoryImageUrl + ')' }"></figure>
-<!--           <img data-bind="attr: { src: card.categoryImageUrl, alt: card.categoryTitle }" /> -->
-          <p class="title" data-bind="text: card.categoryTitle"></p>
-          <p>Rating: <span data-bind="text: card.assetRating"></span></p>
-        </article>
+      <section class="card-container">
+        <div id="card-slider" class="card-slider row-fluid" data-bind="foreach: { data: cards, as: 'card' }, sliderWidth: cards">
+          <article class="card">
+            <figure class="card-image" data-bind="style: { 'background-image': 'url(' + card.categoryImageUrl + ')' }"></figure>
+            <p class="title" data-bind="text: card.categoryTitle"></p>
+            <p>Rating: <span data-bind="text: card.assetRating"></span></p>
+          </article>
+        </div>
+        <button class="back-button" data-bind="click: goBack">Beginning</button>
       </section>
 
       <section class="row-fluid">
-        <h1 class="span12">Window width: <span id="win-width"></span></h1>
+        <h1 class="span12">Window width: <span data-bind="text: windowWidth"></span></h1>
       </section>
 
     </div> <!-- /container -->

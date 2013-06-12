@@ -11664,25 +11664,32 @@ body {
   -o-transition: all 0.3s;
   transition: all 0.3s;
 }
+/* line 94, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+.slide-transition {
+  -webkit-transition: all ease-in-out 0.8s;
+  -moz-transition: all ease-in-out 0.8s;
+  -o-transition: all ease-in-out 0.8s;
+  transition: all ease-in-out 0.8s;
+}
 @media (max-width: 767px) {
-  /* line 95, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+  /* line 99, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
   .hero-unit {
     font-size: 16px;
   }
-  /* line 97, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+  /* line 101, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
   .hero-unit li {
     line-height: 22px;
     padding-bottom: 5px;
   }
-  /* line 98, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+  /* line 102, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
   .hero-unit h1 {
     font-size: 40px;
   }
-  /* line 101, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+  /* line 105, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
   .swipe-menu-left {
     padding: 10px;
   }
-  /* line 104, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+  /* line 108, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
   .swipe-menu-left .btn,
   .swipe-menu-left input.search-field {
     padding: 0 8px;
@@ -11690,63 +11697,79 @@ body {
     line-height: 38px;
     font-size: 14px;
   }
-  /* line 112, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+  /* line 116, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
   .swipe-menu-left input.search-field {
     line-height: 1;
     width: 84%;
   }
-  /* line 114, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+  /* line 118, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
   .swipe-menu-left .btn.search-btn {
     line-height: 39px;
     width: 16%;
   }
 }
-/* line 128, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+/* line 132, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
 .card-container {
   margin: 0;
   height: 350px;
   width: 100%;
   overflow: hidden;
+  position: relative;
 }
-/* line 135, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+/* line 139, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+.card-container .back-button {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 6px 14px;
+  position: absolute;
+  bottom: 25px;
+  right: 25px;
+  color: white;
+  border: none;
+  border-radius: 3px;
+}
+/* line 151, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
 .card,
 .card * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-/* line 140, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+/* line 156, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
 .card {
   color: #333;
-  width: 18.799%;
+  width: 230px;
   height: 350px;
   padding: 10px;
   border-radius: 3px;
   background-color: #fff;
   margin: 0;
-  margin-left: 1.4084507042253522%;
+  margin-left: 20px;
   float: left;
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  -o-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
 }
-/* line 152, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+/* line 167, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
 .card:first-child {
   margin-left: 0;
 }
-/* line 154, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+/* line 169, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
 .card p {
   font-size: 12px;
   margin: 5px 0 0 0;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-/* line 160, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+/* line 175, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
 .card p.title {
   font-size: 15px;
 }
-/* line 163, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+/* line 178, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+.card-slider {
+  width: 9999em;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+/* line 183, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
 .card-image {
   width: 100%;
   height: 280px;
@@ -11755,34 +11778,4 @@ body {
   background-repeat: no-repeat;
   background-color: #ddd;
   margin: 0;
-}
-@media (min-width: 1600px) {
-  /* line 176, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
-  .card {
-    width: 15.492957746478876%;
-  }
-}
-@media (max-width: 1200px) {
-  /* line 180, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
-  .card {
-    width: 23.943661971830988%;
-  }
-}
-@media (max-width: 979px) {
-  /* line 184, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
-  .card {
-    width: 32.3943661971831%;
-  }
-}
-@media (max-width: 767px) {
-  /* line 188, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
-  .card {
-    width: 49.29577464788733%;
-  }
-}
-@media (max-width: 480px) {
-  /* line 192, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
-  .card {
-    width: 100%;
-  }
 }

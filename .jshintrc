@@ -20,9 +20,10 @@
   , "laxcomma" : true
   , "laxbreak" : true
   , "globals"  : {
-    "_"    : true
-    , "$"  : true
-    , "$$" : true
-    , "ko" : true
+    "_"        : true
+    , "$"      : true
+    , "$$"     : true
+    , "ko"     : true
+    , "Hammer" : true
   }
 }

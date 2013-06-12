@@ -91,6 +91,10 @@ body {
 	.transition(all 0.3s);
 }
 
+.slide-transition {
+	.transition(all ease-in-out 0.8s);
+}
+
 @media (max-width: 767px) {
 	.hero-unit {
 		font-size: 16px;
@@ -130,6 +134,18 @@ body {
 	height: 350px;
 	width: 100%;
 	overflow: hidden;
+	position: relative;
+
+	.back-button {
+		background: hsla(0, 0, 0, 0.8);
+		padding: 6px 14px;
+		position: absolute;
+		bottom: 25px;
+		right: 25px;
+		color: white;
+		border: none;
+		border-radius: 3px;
+	}
 }
 
 .card,
@@ -139,15 +155,14 @@ body {
 
 .card {
 	color: #333;
-	width: 18.799%;
+	width: 230px;
 	height: 350px;
 	padding: 10px;
 	border-radius: 3px;
 	background-color: #fff;
 	margin: 0;
-	margin-left: 1.4084507042253522%;
+	margin-left: 20px;
 	float: left;
-	.translate3d(0, 0, 0);
 
 	&:first-child { margin-left: 0; }
 
@@ -160,6 +175,11 @@ body {
 	p.title { font-size: 15px; }
 }
 
+.card-slider {
+	width: 9999em;
+	.translate3d(0, 0, 0);
+}
+
 .card-image {
 	width: 100%;
 	height: 280px;
@@ -170,24 +190,4 @@ body {
 	background-repeat: no-repeat;
 	background-color: #ddd;
 	margin: 0;
-}
-
-@media(min-width: 1600px) {
-	.card { width: 15.492957746478876%; }
-}
-
-@media(max-width: 1200px) {
-	.card { width: 23.943661971830988%; }
-}
-
-@media(max-width: 979px) {
-	.card { width: 32.3943661971831%; }
-}
-
-@media(max-width: 767px) {
-	.card { width: 49.29577464788733%; }
-}
-
-@media(max-width: 480px) {
-	.card { width: 100%; }
 }
