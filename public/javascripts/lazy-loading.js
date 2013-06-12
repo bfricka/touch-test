@@ -41,9 +41,9 @@
 
 			case 'swipe':
 				slider.addClass('slide-transition');
-				// var multiplier = (gesture.deltaX / cardContainer.offsetWidth) * 5000;
-				// posX = ((multiplier * Math.max(1, Math.min(4, gesture.velocityX))) + prevPosX);
-				posX = ((gesture.deltaX * gesture.velocityX) + prevPosX);
+				var multiplier = (gesture.deltaX / cardContainer.offsetWidth);
+				multiplier = (gesture.direction === 'right' ? 1 + multiplier : multiplier - 1) * cardContainer.offsetWidth;
+				posX = ((multiplier * Math.max(1, Math.min(4, gesture.velocityX))) + prevPosX);
 				translateX(slider, posX);
 				prevPosX = posX;
 				break;
