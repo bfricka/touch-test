@@ -17,7 +17,6 @@
 				slider.removeClass('swipe-transition');
 				posX = gesture.deltaX + prevPosX;
 				translateX(slider, posX);
-				cardVm.cards.valueHasMutated();
 				break;
 
 			case 'release':
@@ -42,7 +41,9 @@
 
 			case 'swipe':
 				slider.addClass('slide-transition');
-				posX = ((gesture.deltaX * Math.max(1, Math.min(4, gesture.velocityX))) + prevPosX);
+				// var multiplier = (gesture.deltaX / cardContainer.offsetWidth) * 5000;
+				// posX = ((multiplier * Math.max(1, Math.min(4, gesture.velocityX))) + prevPosX);
+				posX = ((gesture.deltaX * gesture.velocityX) + prevPosX);
 				translateX(slider, posX);
 				prevPosX = posX;
 				break;
@@ -83,7 +84,7 @@
 			}
 
 			var total = this.totalVisibleCards()
-				, startIdx = -Math.round(posX / this.cardWidth)
+				, startIdx = -Math.ceil(posX / this.cardWidth)
 				, endIdx = startIdx + total;
 			
 			this.startIdx(startIdx);
@@ -95,7 +96,8 @@
 		this.goBack = function() {
 			if (posX === 0) return;
 			slider.addClass('slide-transition');
-			translateX(slider, 0);
+			prevPosX = posX = 0;
+			translateX(slider, posX);
 		};
 
 		this.isActive = function(idx) {
