@@ -11783,3 +11783,8 @@ body {
   background-color: #ddd;
   margin: 0;
 }
+/* line 196, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+.card-overflow {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}

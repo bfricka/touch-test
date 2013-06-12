@@ -6,63 +6,57 @@
 			, drag_lock_to_axis: true
 		})
 		, slider = cardSlider.element
-		, posX = 0, prevPosX = 0, isTransitioning = false;
+		, posX = 0, prevPosX = 0
+		, isTransitioning = false;
+		
+		cardSlider.on('touch drag dragend release swipe', function(evt){
+			var gesture = evt.gesture;
 
-	cardSlider.on('touch drag dragend release swipe', function(evt){
-		var gesture = evt.gesture;
+			switch (evt.type) {
+				case 'touch':
+					removeTransition(slider);
+					break;
 
-		switch (evt.type) {
-			case 'touch':
-				removeTransition(slider);
-				break;
-
-			case 'drag':
-				// if (!isTransitioning) {
-				// 	removeTransition(slider);
-				// }
-				posX = gesture.deltaX + prevPosX;
-				translateX(slider, posX);
-				break;
-
-			case 'release':
-				var totalWidth = cardVm.containerWidth() - (cardVm.totalCards() * cardVm.cardWidth);
-
-				if (posX > 0) {
-					posX = 0;
-					addTransition(slider, true);
+				case 'drag':
+					posX = gesture.deltaX + prevPosX;
 					translateX(slider, posX);
-				}
+					break;
 
-				if (posX < totalWidth) {
-					posX = totalWidth;
-					addTransition(slider, true);
+				case 'release':
+					var totalWidth = cardVm.containerWidth() - (cardVm.totalCards() * cardVm.cardWidth);
+
+					if (posX > 0) {
+						posX = 0;
+						addTransition(slider, true);
+						translateX(slider, posX);
+					}
+
+					if (posX < totalWidth) {
+						posX = totalWidth;
+						addTransition(slider, true);
+						translateX(slider, posX);
+					}
+
+					prevPosX = posX;
+					break;
+
+				case 'dragend':
+					if (gesture.velocityX >= cardSlider.options.swipe_velocity && gesture.deltaTime <= 200) return;
+					cardVm.cards.valueHasMutated();
+					break;
+
+				case 'swipe':
+					if (gesture.deltaTime > 200) return;
+
+					addTransition(slider);
+
+					var multiplier = gesture.direction === 'left' ? -cardContainer.offsetWidth : cardContainer.offsetWidth;
+					posX = ((multiplier * Math.min(6, gesture.velocityX)) + prevPosX);
 					translateX(slider, posX);
-				}
-
-				prevPosX = posX;
-				break;
-
-			case 'dragend':
-				if (gesture.velocityX >= cardSlider.options.swipe_velocity && gesture.deltaTime <= 200) return;
-				cardVm.cards.valueHasMutated();
-				break;
-
-			case 'swipe':
-				if (gesture.deltaTime > 200) return;
-
-				addTransition(slider);
-
-				var multiplier = gesture.direction === 'left' ? -cardContainer.offsetWidth : cardContainer.offsetWidth;
-				posX = ((multiplier * Math.min(6, gesture.velocityX)) + prevPosX);
-				translateX(slider, posX);
-				prevPosX = posX;
-				break;
-		}
-	});
-
-	function setTransition() {
-
-	}
+					prevPosX = posX;
+					break;
+			}
+		});
 
 	function addTransition(el, slow) {
 		isTransitioning = true;
@@ -94,11 +88,32 @@
 		this.containerWidth = ko.observable(cardContainer.offsetWidth);
 		this.startIdx = ko.observable(0);
 		this.endIdx = ko.observable(1);
+		this.scrollType = ko.observable('event');
 
 		this.totalCards = function() { return this.cards().length; };
 
 		this.totalVisibleCards = function() {
 			return Math.floor(this.containerWidth() / this.cardWidth);
+		};
+
+		this.toggleScrollText = function() {
+			var scrollType = this.scrollType();
+
+			return scrollType.charAt(0).toUpperCase() + scrollType.slice(1);
+		};
+
+		this.toggleScrollType = function() {
+			var scrollType = this.scrollType();
+			 
+			if (scrollType === 'event') {
+				scrollType = 'overflow';
+				cardSlider.enable(false);
+			} else {
+				scrollType = 'event';
+				cardSlider.enable(true);
+			}
+			
+			this.scrollType(scrollType);
 		};
 
 		this.getCardInfo = function(el) {
