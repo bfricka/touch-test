@@ -44,8 +44,8 @@
 
       <section class="card-container">
         <div id="card-slider" class="card-slider row-fluid" data-bind="foreach: { data: cards, as: 'card' }, sliderWidth: cards">
-          <article class="card">
-            <figure class="card-image" data-bind="style: { 'background-image': 'url(' + card.categoryImageUrl + ')' }"></figure>
+          <article class="card" data-bind="attr: { 'data-width': $parent.getCardInfo($element) }">
+            <figure class="card-image" data-bind="style: { 'background-image': 'url(' + $parent.cardImageUrl($data, $index) + ')' }"></figure>
             <p class="title" data-bind="text: card.categoryTitle"></p>
             <p>Rating: <span data-bind="text: card.assetRating"></span></p>
           </article>

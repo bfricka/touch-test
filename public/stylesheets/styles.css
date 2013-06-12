@@ -11743,25 +11743,25 @@ body {
   border-radius: 3px;
   background-color: #fff;
   margin: 0;
-  margin-left: 20px;
+  margin-right: 20px;
   float: left;
 }
-/* line 167, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
-.card:first-child {
-  margin-left: 0;
+/* line 168, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+.card.active {
+  visibility: visible;
 }
-/* line 169, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+/* line 171, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
 .card p {
   font-size: 12px;
   margin: 5px 0 0 0;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-/* line 175, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+/* line 177, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
 .card p.title {
   font-size: 15px;
 }
-/* line 178, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+/* line 180, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
 .card-slider {
   width: 9999em;
   -webkit-transform: translate3d(0, 0, 0);
@@ -11769,7 +11769,7 @@ body {
   -o-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
-/* line 183, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+/* line 185, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
 .card-image {
   width: 100%;
   height: 280px;
