@@ -13,29 +13,27 @@
 
 		switch (evt.type) {
 			case 'touch':
-				slider.removeClass('slider-transition');
-				slider.removeClass('swipe-transition');
+				removeTransition(slider);
 				break;
 
 			case 'drag':
-				slider.removeClass('slider-transition');
-				slider.removeClass('swipe-transition');
+				removeTransition(slider);
 				posX = gesture.deltaX + prevPosX;
 				translateX(slider, posX);
 				break;
 
 			case 'release':
-				var totalWidth = cardVm.windowWidth() - (cardVm.totalCards() * cardVm.cardWidth);
+				var totalWidth = cardVm.containerWidth() - (cardVm.totalCards() * cardVm.cardWidth);
 
 				if (posX > 0) {
 					posX = 0;
-					slider.addClass('swipe-transition');
+					addTransition(slider, true);
 					translateX(slider, posX);
 				}
 
 				if (posX < totalWidth) {
 					posX = totalWidth;
-					slider.addClass('swipe-transition');
+					addTransition(slider, true);
 					translateX(slider, posX);
 				}
 
@@ -50,9 +48,8 @@
 			case 'swipe':
 				if (gesture.deltaTime > 200) return;
 
-				slider.addClass('slide-transition');
-				// var multiplier = (gesture.deltaX / cardContainer.offsetWidth);
-				// multiplier = (gesture.direction === 'right' ? 1 + multiplier : multiplier - 1) * cardContainer.offsetWidth;
+				addTransition(slider);
+
 				var multiplier = gesture.direction === 'left' ? -cardContainer.offsetWidth : cardContainer.offsetWidth;
 				posX = ((multiplier * Math.min(6, gesture.velocityX)) + prevPosX);
 				translateX(slider, posX);
@@ -61,9 +58,17 @@
 		}
 	});
 
+	function addTransition(el, slow) {
+		var duration = slow ? "300ms" : "600ms";
+		el.style.webkitTransitionDuration = duration;
+	}
+
+	function removeTransition(el) {
+		el.style.webkitTransitionDuration = "0";
+	}
+
 	slider.addEvent('transitionend', function() {
-		slider.removeClass('slide-transition');
-		slider.removeClass('swipe-transition');
+		removeTransition(slider);
 		cardVm.cards.valueHasMutated();
 	});
 
@@ -73,19 +78,19 @@
 	function CardViewModel() {
 		var self = this;
 		window.addEvent('resize', function(){
-			self.windowWidth(cardContainer.offsetWidth);
+			self.containerWidth(cardContainer.offsetWidth);
 		});
 
 		this.loaderUrl = "public/img/loader.gif";
 		this.cards = ko.observableArray(window.cards);
-		this.windowWidth = ko.observable(cardContainer.offsetWidth);
+		this.containerWidth = ko.observable(cardContainer.offsetWidth);
 		this.startIdx = ko.observable(0);
 		this.endIdx = ko.observable(1);
 
 		this.totalCards = function() { return this.cards().length; };
 
 		this.totalVisibleCards = function() {
-			return Math.floor(this.windowWidth() / this.cardWidth);
+			return Math.floor(this.containerWidth() / this.cardWidth);
 		};
 
 		this.getCardInfo = function(el) {
@@ -105,7 +110,7 @@
 
 		this.goBack = function() {
 			if (posX === 0) return;
-			slider.addClass('slide-transition');
+			addTransition(slider);
 			prevPosX = posX = 0;
 			translateX(slider, posX);
 		};

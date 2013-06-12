@@ -11768,8 +11768,12 @@ body {
   -moz-transform: translate3d(0, 0, 0);
   -o-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
+  -webkit-transition: all;
+  -moz-transition: all;
+  -o-transition: all;
+  transition: all;
 }
-/* line 185, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
+/* line 186, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
 .card-image {
   width: 100%;
   height: 280px;
