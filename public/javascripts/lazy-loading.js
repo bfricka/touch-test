@@ -1,6 +1,10 @@
 (function(){
 	var cardContainer = $('card-container')
-		, cardSlider = window.cardSlider = Hammer($('card-slider'), { prevent_default: true })
+		, cardSlider = window.cardSlider = Hammer($('card-slider'), { 
+			prevent_default: true 
+			, drag_block_vertical: false
+			, drag_lock_to_axis: true
+		})
 		, slider = cardSlider.element
 		, posX = 0, prevPosX = 0;
 
