@@ -42,7 +42,7 @@
         </ol>
       </nav>
 
-      <section class="card-container">
+      <section class="card-container" id="card-container">
         <div id="card-slider" class="card-slider row-fluid" data-bind="foreach: { data: cards, as: 'card' }, sliderWidth: cards">
           <article class="card" data-bind="attr: { 'data-width': $parent.getCardInfo($element) }">
             <figure class="card-image" data-bind="style: { 'background-image': 'url(' + $parent.cardImageUrl($data, $index) + ')' }"></figure>
