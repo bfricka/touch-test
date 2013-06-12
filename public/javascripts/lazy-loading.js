@@ -8,10 +8,15 @@
 		, slider = cardSlider.element
 		, posX = 0, prevPosX = 0;
 
-	cardSlider.on('drag release swipe', function(evt){
+	cardSlider.on('touch drag dragend release swipe', function(evt){
 		var gesture = evt.gesture;
 
 		switch (evt.type) {
+			case 'touch':
+				slider.removeClass('slider-transition');
+				slider.removeClass('swipe-transition');
+				break;
+
 			case 'drag':
 				slider.removeClass('slider-transition');
 				slider.removeClass('swipe-transition');
@@ -35,16 +40,21 @@
 				}
 
 				prevPosX = posX;
+				break;
 
+			case 'dragend':
+				if (gesture.velocityX >= cardSlider.options.swipe_velocity && gesture.deltaTime <= 200) return;
 				cardVm.cards.valueHasMutated();
 				break;
 
 			case 'swipe':
+				if (gesture.deltaTime > 200) return;
+
 				slider.addClass('slide-transition');
 				// var multiplier = (gesture.deltaX / cardContainer.offsetWidth);
 				// multiplier = (gesture.direction === 'right' ? 1 + multiplier : multiplier - 1) * cardContainer.offsetWidth;
 				var multiplier = gesture.direction === 'left' ? -cardContainer.offsetWidth : cardContainer.offsetWidth;
-				posX = ((multiplier * Math.min(5, gesture.velocityX)) + prevPosX);
+				posX = ((multiplier * Math.min(6, gesture.velocityX)) + prevPosX);
 				translateX(slider, posX);
 				prevPosX = posX;
 				break;
@@ -54,7 +64,7 @@
 	slider.addEvent('transitionend', function() {
 		slider.removeClass('slide-transition');
 		slider.removeClass('swipe-transition');
-		cardSlider.trigger('release', {});
+		cardVm.cards.valueHasMutated();
 	});
 
 	// Add active to cards
