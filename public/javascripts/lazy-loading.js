@@ -6,7 +6,7 @@
 			, drag_lock_to_axis: true
 		})
 		, slider = cardSlider.element
-		, posX = 0, prevPosX = 0;
+		, posX = 0, prevPosX = 0, isTransitioning = false;
 
 	cardSlider.on('touch drag dragend release swipe', function(evt){
 		var gesture = evt.gesture;
@@ -17,7 +17,9 @@
 				break;
 
 			case 'drag':
-				removeTransition(slider);
+				// if (!isTransitioning) {
+				// 	removeTransition(slider);
+				// }
 				posX = gesture.deltaX + prevPosX;
 				translateX(slider, posX);
 				break;
@@ -63,11 +65,13 @@
 	}
 
 	function addTransition(el, slow) {
+		isTransitioning = true;
 		var duration = slow ? "300ms" : "600ms";
 		el.style.webkitTransitionDuration = duration;
 	}
 
 	function removeTransition(el) {
+		isTransitioning = false;
 		el.style.webkitTransitionDuration = "0";
 	}
 

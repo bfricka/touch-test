@@ -11768,10 +11768,10 @@ body {
   -moz-transform: translate3d(0, 0, 0);
   -o-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
-  -webkit-transition: all;
-  -moz-transition: all;
-  -o-transition: all;
-  transition: all;
+  -webkit-transition: all cubic-bezier(0.165, 0.84, 0.44, 1);
+  -moz-transition: all cubic-bezier(0.165, 0.84, 0.44, 1);
+  -o-transition: all cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 /* line 186, c:\Users\bfrichette\Desktop\Mobile\public\stylesheets\app\main.less */
 .card-image {
