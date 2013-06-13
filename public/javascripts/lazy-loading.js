@@ -63,7 +63,13 @@
 					if (posX > 0) posX = 0;
 
 					// Snap back to end if past end
-					if (posX < totalWidth) posX = totalWidth;
+					if (posX < totalWidth) {
+						if (cardVm.numberOfPages !== cardVm.currentNumberOfPages()) {
+							cardVm.loadMore();
+						}
+
+						posX = totalWidth;
+					}
 
 					prevPosX = posX;
 
@@ -87,8 +93,8 @@
 		var containerWidth = cardContainer.offsetWidth
 			, multiplier = gesture.direction === 'left' ? -containerWidth : containerWidth;
 
-		if (containerWidth >= 980) return (multiplier * Math.min(5, gesture.velocityX)) + prevPosX;
-		if (containerWidth < 980 && containerWidth >= 768) return (multiplier * Math.min(6, gesture.velocityX)) + prevPosX;
+		if (containerWidth >= 980) return (multiplier * Math.min(4, gesture.velocityX)) + prevPosX;
+		if (containerWidth < 980 && containerWidth >= 768) return (multiplier * Math.min(5, gesture.velocityX)) + prevPosX;
 		return (multiplier * (gesture.velocityX + 1)) + prevPosX;
 	}
 
@@ -122,11 +128,13 @@
 			self.containerWidth(cardContainer.offsetWidth);
 		});
 
-		this.cards = ko.observableArray(window.cards);
+		this.cards = ko.observableArray([]);
 		this.endIdx = ko.observable(1);
 		this.startIdx = ko.observable(0);
 		this.scrollType = ko.observable('event');
+		this.numberOfPages = 5;
 		this.containerWidth = ko.observable(cardContainer.offsetWidth);
+		this.currentNumberOfPages = ko.observable(0);
 
 		this.totalCards = function() { return this.cards().length; };
 
@@ -186,14 +194,82 @@
 			var active = this.isActive(card, idx());
 			return active ? 'url('+card.categoryImageUrl+')' : 'none';
 		};
+
+		this.loadMore = function() {
+			var self = this
+				, request = fakeRequest('cards');
+
+			request
+				.send()
+				.success(function(data) {
+					self.currentNumberOfPages(self.currentNumberOfPages() + 1);
+
+					var len = data.length
+						, i = 0;
+
+					while (i < len) {
+						self.cards.push(data[i]);
+						i++;
+					}
+				});
+		};
 	}
 
 	var cardVm = window.cardVm = new CardViewModel();
 
 	ko.applyBindings(cardVm);
+	cardVm.loadMore();
 
 	// Todo: create x-browser transition / transform prefix getter.
 	function translateX(el, posX) {
 		el.style.webkitTransform = 'translate3d('+posX+'px, 0, 0)';
 	}
 }());
+
+/**
+ * Takes a string of a global variable and an async timer duration and spits out
+ * a fake request object. The request object has a send and success method which works
+ * as you might think.
+ * @param  {String} url   Global variable name for data source
+ * @param  {Number} timer Duration of async request response in ms (default: 500)
+ * @return {Object<Request>}
+ */
+function fakeRequest(url, timer) {
+	function Request() {
+		this.url = url;
+		this.timer = timer || 500;
+		this._onSuccessQ = [];
+	}
+
+	Request.prototype = {
+		send: function() {
+			var asyncFn = function() {
+				this.data = window[this.url];
+				this._processSuccessQ.call(this);
+			}.bind(this);
+
+			setTimeout(asyncFn, this.timer);
+			return this;
+		}
+
+		, _processSuccessQ: function() {
+			var len = this._onSuccessQ.length
+				, i = 0;
+
+			while (i < len) {
+				this._onSuccessQ[i].call(this, this.data);
+				i++;
+			}
+		}
+
+		, success: function(fn) {
+			this._onSuccessQ.push(fn);
+			if (this.data) {
+				this._processSuccessQ.call(this);
+			}
+			return this;
+		}
+	};
+
+	return new Request();
+}
