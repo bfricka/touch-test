@@ -7,22 +7,34 @@
 		, swipeTime = 300
 		, prevSwipeTimestamp = 0
 
-		, cardSlider = window.cardSlider = Hammer(slider, { drag_lock_to_axis: true });
+		, cardSlider = window.cardSlider = Hammer(slider, {
+			hold: false
+			, transform: false
+			// , prevent_default: true
+			, swipe_velocity: 0.55
+			, drag_lock_to_axis: true
+		});
 
 		// Note: change to only handle dragRight / dragLeft for drag events (and remove block on vertical scrolling)
 
-		cardSlider.on('touch drag dragend release swipe', function(evt){
+		cardSlider.on('drag release swipe', function(evt){
 			var gesture = evt.gesture;
 
-			switch (evt.type) {
-				case 'touch':
-					removeTransition(slider);
-					break;
+			if (!gesture) return;
 
+			switch (evt.type) {
 				case 'drag':
-					if (gesture.deltaY < 150) {
-						evt.preventDefault();	
-					}					
+					if (isTransitioning) removeTransition(slider);
+					
+					switch (gesture.direction) {
+						case 'up':
+						case 'down':
+							return;
+						case 'left':
+						case 'right':
+							gesture.preventDefault();
+							break;
+					}
 					// Allow for drag events to record the a timestamp when gesture velocity is reached
 					// The scenario that this affects is surprisingly common in my testing: When you start dragging
 					// content quickly (gesture velocity reached) and then abruptly stop and release some time later,
@@ -39,6 +51,11 @@
 					break;
 
 				case 'release':
+					// Don't update value if we it's a swipe event
+					if (!isSwipe(gesture)) {
+						cardVm.cards.valueHasMutated();
+					}
+
 					var totalWidth = cardVm.containerWidth() - (cardVm.totalCards() * cardVm.cardWidth);
 
 					// > 0 means before the beginning. Snap back.
@@ -53,25 +70,26 @@
 					translateX(slider, posX);
 					break;
 
-				case 'dragend':
-					// Don't update value if we it's a swipe event
-					if (isSwipe(gesture)) return;
-					cardVm.cards.valueHasMutated();
-					break;
-
 				case 'swipe':
-					evt.preventDefault();
 					if (prevSwipeTimestamp - gesture.timestamp > swipeTime) return;
 
 					addTransition(slider);
 
-					var multiplier = gesture.direction === 'left' ? -cardContainer.offsetWidth : cardContainer.offsetWidth;
-					posX = ((multiplier * Math.min(6, gesture.velocityX)) + prevPosX);
+					posX = getSwipePosX(gesture);
 					translateX(slider, posX);
 					prevPosX = posX;
 					break;
 			}
 		});
+
+	function getSwipePosX(gesture) {
+		var containerWidth = cardContainer.offsetWidth
+			, multiplier = gesture.direction === 'left' ? -containerWidth : containerWidth;
+
+		if (containerWidth >= 980) return (multiplier * Math.min(5, gesture.velocityX)) + prevPosX;
+		if (containerWidth < 980 && containerWidth >= 768) return (multiplier * Math.min(6, gesture.velocityX)) + prevPosX;
+		return (multiplier * (gesture.velocityX + 1)) + prevPosX;
+	}
 
 	function isSwipe(gesture) {
 		return gesture.velocityX >= cardSlider.options.swipe_velocity && gesture.deltaTime <= swipeTime ? true : false;
@@ -93,6 +111,7 @@
 		cardVm.cards.valueHasMutated();
 	});
 
+	// Add active to cards
 	var cardFullWidth = 0;
 
 	function CardViewModel() {
