@@ -51,13 +51,11 @@
         </div>
       </div>
 
-      <section class="card-container" id="card-container">
+      <section class="card-container" id="card-container" data-bind="css: { 'card-overflow': scrollType() == 'overflow' }">
         <div 
           id="card-slider" 
           class="card-slider row-fluid" 
-          data-bind=" css: { 'card-overflow': scrollType() == 'overflow' },
-                      foreach: { data: cards, as: 'card' }"
-        >
+          data-bind="foreach: { data: cards, as: 'card' }">
 
           <article 
             class="card" 
