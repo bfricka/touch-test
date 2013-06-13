@@ -11,7 +11,7 @@
 
 		// Note: change to only handle dragRight / dragLeft for drag events (and remove block on vertical scrolling)
 
-		cardSlider.on('touch dragright dragleft dragend release swipe', function(evt){
+		cardSlider.on('touch drag dragend release swipe', function(evt){
 			var gesture = evt.gesture;
 
 			switch (evt.type) {
@@ -19,9 +19,10 @@
 					removeTransition(slider);
 					break;
 
-				case 'dragright':
-				case 'dragleft':
-					evt.preventDefault();
+				case 'drag':
+					if (gesture.deltaY < 150) {
+						evt.preventDefault();	
+					}					
 					// Allow for drag events to record the a timestamp when gesture velocity is reached
 					// The scenario that this affects is surprisingly common in my testing: When you start dragging
 					// content quickly (gesture velocity reached) and then abruptly stop and release some time later,
