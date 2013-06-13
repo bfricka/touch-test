@@ -45,16 +45,27 @@
       <div class="row-fluid">
         <div class="span12" style="margin-bottom: 25px">
           <button 
-            class="btn btn-inverse btn-large" 
             id="toggle-scroll-type" 
+            class="btn btn-inverse btn-large" 
             data-bind="click: toggleScrollType, text: toggleScrollText()"></button>
         </div>
       </div>
 
       <section class="card-container" id="card-container">
-        <div id="card-slider" class="card-slider row-fluid" data-bind="foreach: { data: cards, as: 'card' }, sliderWidth: cards, css: { 'card-overflow': scrollType() == 'overflow' }">
-          <article class="card" data-bind="attr: { 'data-width': $parent.getCardInfo($element) }">
-            <figure class="card-image" data-bind="style: { 'background-image': 'url(' + $parent.cardImageUrl($data, $index) + ')' }"></figure>
+        <div 
+          id="card-slider" 
+          class="card-slider row-fluid" 
+          data-bind=" css: { 'card-overflow': scrollType() == 'overflow' },
+                      foreach: { data: cards, as: 'card' }"
+        >
+
+          <article 
+            class="card" 
+            data-bind="attr: { 'data-width': $parent.getCardInfo($element) }">
+
+            <figure 
+              class="card-image" 
+              data-bind="style: { 'background-image': $parent.cardBgImage($data, $index) }"></figure>
             <p class="title" data-bind="text: card.categoryTitle"></p>
             <p>Rating: <span data-bind="text: card.assetRating"></span></p>
           </article>

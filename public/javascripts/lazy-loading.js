@@ -7,15 +7,11 @@
 		, swipeTime = 300
 		, prevSwipeTimestamp = 0
 
-		, cardSlider = window.cardSlider = Hammer(slider, {
-			prevent_default: true
-			, drag_block_vertical: false
-			, drag_lock_to_axis: true
-		});
+		, cardSlider = window.cardSlider = Hammer(slider, { drag_lock_to_axis: true });
 
 		// Note: change to only handle dragRight / dragLeft for drag events (and remove block on vertical scrolling)
 
-		cardSlider.on('touch drag dragend release swipe', function(evt){
+		cardSlider.on('touch dragright dragleft dragend release swipe', function(evt){
 			var gesture = evt.gesture;
 
 			switch (evt.type) {
@@ -23,7 +19,9 @@
 					removeTransition(slider);
 					break;
 
-				case 'drag':
+				case 'dragright':
+				case 'dragleft':
+					evt.preventDefault();
 					// Allow for drag events to record the a timestamp when gesture velocity is reached
 					// The scenario that this affects is surprisingly common in my testing: When you start dragging
 					// content quickly (gesture velocity reached) and then abruptly stop and release some time later,
@@ -61,6 +59,7 @@
 					break;
 
 				case 'swipe':
+					evt.preventDefault();
 					if (prevSwipeTimestamp - gesture.timestamp > swipeTime) return;
 
 					addTransition(slider);
@@ -93,21 +92,20 @@
 		cardVm.cards.valueHasMutated();
 	});
 
-	// Add active to cards
 	var cardFullWidth = 0;
 
 	function CardViewModel() {
 		var self = this;
+
 		window.addEvent('resize', function(){
 			self.containerWidth(cardContainer.offsetWidth);
 		});
 
-		this.loaderUrl = "public/img/loader.gif";
 		this.cards = ko.observableArray(window.cards);
-		this.containerWidth = ko.observable(cardContainer.offsetWidth);
-		this.startIdx = ko.observable(0);
 		this.endIdx = ko.observable(1);
+		this.startIdx = ko.observable(0);
 		this.scrollType = ko.observable('event');
+		this.containerWidth = ko.observable(cardContainer.offsetWidth);
 
 		this.totalCards = function() { return this.cards().length; };
 
@@ -117,7 +115,6 @@
 
 		this.toggleScrollText = function() {
 			var scrollType = this.scrollType();
-
 			return scrollType.charAt(0).toUpperCase() + scrollType.slice(1);
 		};
 
@@ -164,10 +161,9 @@
 			return card.active;
 		};
 
-		this.cardImageUrl = function(card, idx) {
+		this.cardBgImage = function(card, idx) {
 			var active = this.isActive(card, idx());
-
-			return active ? card.categoryImageUrl : this.loaderUrl;
+			return active ? 'url('+card.categoryImageUrl+')' : 'none';
 		};
 	}
 
