@@ -1,14 +1,20 @@
 (function(){
 	var cardContainer = $('card-container')
-		, cardSlider = window.cardSlider = Hammer($('card-slider'), { 
-			prevent_default: true 
+		, slider = $('card-slider')
+		, posX = 0, prevPosX = 0
+		, isTransitioning = false
+		// The deltaTime that classifies a swipe
+		, swipeTime = 300
+		, prevSwipeTimestamp = 0
+
+		, cardSlider = window.cardSlider = Hammer(slider, {
+			prevent_default: true
 			, drag_block_vertical: false
 			, drag_lock_to_axis: true
-		})
-		, slider = cardSlider.element
-		, posX = 0, prevPosX = 0
-		, isTransitioning = false;
-		
+		});
+
+		// Note: change to only handle dragRight / dragLeft for drag events (and remove block on vertical scrolling)
+
 		cardSlider.on('touch drag dragend release swipe', function(evt){
 			var gesture = evt.gesture;
 
@@ -18,6 +24,17 @@
 					break;
 
 				case 'drag':
+					// Allow for drag events to record the a timestamp when gesture velocity is reached
+					// The scenario that this affects is surprisingly common in my testing: When you start dragging
+					// content quickly (gesture velocity reached) and then abruptly stop and release some time later,
+					// a swipe event still fires (since it only cares about end velocity). We had to block this for
+					// obvious reasons (needless transition). However, another common scenario is to drag quickly and then
+					// stop on a piece of content without releasing, examine it for a minute, and then swipe the content
+					// forward. Since we blocked this before based on timestamp, we need to register the timestamp of the
+					// last drag event that reached swipe velocity. Then we can get the behavior we want:
+					// Drag fast -> Stop for an arbitrary period -> swipe forward again.
+					if (isSwipe(gesture)) prevSwipeTimestamp = gesture.timestamp;
+
 					posX = gesture.deltaX + prevPosX;
 					translateX(slider, posX);
 					break;
@@ -25,28 +42,26 @@
 				case 'release':
 					var totalWidth = cardVm.containerWidth() - (cardVm.totalCards() * cardVm.cardWidth);
 
-					if (posX > 0) {
-						posX = 0;
-						addTransition(slider, true);
-						translateX(slider, posX);
-					}
+					// > 0 means before the beginning. Snap back.
+					if (posX > 0) posX = 0;
 
-					if (posX < totalWidth) {
-						posX = totalWidth;
-						addTransition(slider, true);
-						translateX(slider, posX);
-					}
+					// Snap back to end if past end
+					if (posX < totalWidth) posX = totalWidth;
 
 					prevPosX = posX;
+
+					addTransition(slider, true);
+					translateX(slider, posX);
 					break;
 
 				case 'dragend':
-					if (gesture.velocityX >= cardSlider.options.swipe_velocity && gesture.deltaTime <= 200) return;
+					// Don't update value if we it's a swipe event
+					if (isSwipe(gesture)) return;
 					cardVm.cards.valueHasMutated();
 					break;
 
 				case 'swipe':
-					if (gesture.deltaTime > 200) return;
+					if (prevSwipeTimestamp - gesture.timestamp > swipeTime) return;
 
 					addTransition(slider);
 
@@ -57,6 +72,10 @@
 					break;
 			}
 		});
+
+	function isSwipe(gesture) {
+		return gesture.velocityX >= cardSlider.options.swipe_velocity && gesture.deltaTime <= swipeTime ? true : false;
+	}
 
 	function addTransition(el, slow) {
 		isTransitioning = true;
@@ -104,7 +123,7 @@
 
 		this.toggleScrollType = function() {
 			var scrollType = this.scrollType();
-			 
+
 			if (scrollType === 'event') {
 				scrollType = 'overflow';
 				cardSlider.enable(false);
@@ -112,7 +131,7 @@
 				scrollType = 'event';
 				cardSlider.enable(true);
 			}
-			
+
 			this.scrollType(scrollType);
 		};
 
@@ -124,7 +143,7 @@
 			var total = this.totalVisibleCards()
 				, startIdx = -Math.ceil(posX / this.cardWidth)
 				, endIdx = startIdx + total;
-			
+
 			this.startIdx(startIdx);
 			this.endIdx(endIdx > this.totalCards() ? this.totalCards() : endIdx);
 
@@ -156,6 +175,7 @@
 
 	ko.applyBindings(cardVm);
 
+	// Todo: create x-browser transition / transform prefix getter.
 	function translateX(el, posX) {
 		el.style.webkitTransform = 'translate3d('+posX+'px, 0, 0)';
 	}
