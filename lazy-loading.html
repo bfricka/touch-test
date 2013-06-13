@@ -59,7 +59,7 @@
 
           <article 
             class="card" 
-            data-bind="attr: { 'data-width': $parent.getCardInfo($element) }">
+            data-bind="attr: { 'data-width': $parent.getCardInfo($element) }, style: { 'visibility': $parent.isVisible($index) }">
 
             <figure 
               class="card-image" 
