@@ -29,7 +29,8 @@
 					switch (gesture.direction) {
 						case 'up':
 						case 'down':
-							return;
+							if (Math.abs(gesture.deltaY) > 80) return;
+							/* falls through */
 						case 'left':
 						case 'right':
 							gesture.preventDefault();
