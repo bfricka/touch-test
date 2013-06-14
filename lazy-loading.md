@@ -2,6 +2,8 @@
 
 ## Overview
 
+[See the demo](http://brian-frichette.github.io/touch-test/lazy-loading)
+
 This was an extremely informative research project. The established goal was to investigate the feasibility and efficacy of lazily loading page components in the CPU / resource-contstrained mobile environment with the aim of improving speed and experience.  While it's clear that there is much more to learn, I believe we have established a reasonable baseline from which to base future endeavors into building performant mobile experiences in the front-end technologies we leverage.
 
 ## Philosophies employed and gleaned
