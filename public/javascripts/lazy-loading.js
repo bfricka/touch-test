@@ -134,20 +134,12 @@
 		this.scrollType = ko.observable('event');
 		this.numberOfPages = 5;
 		this.containerWidth = ko.observable(cardContainer.offsetWidth);
-		this.visibleThreshold = 50;
 		this.currentNumberOfPages = ko.observable(0);
 
 		this.totalCards = function() { return this.cards().length; };
 
 		this.totalVisibleCards = function() {
 			return Math.floor(this.containerWidth() / this.cardWidth);
-		};
-
-		this.isVisible = function(idx) {
-			idx = idx();
-			return idx < this.startIdx() - this.visibleThreshold || idx > this.endIdx() + this.visibleThreshold
-				? 'hidden'
-				: 'visible';
 		};
 
 		this.toggleScrollText = function() {
@@ -205,7 +197,7 @@
 
 		this.loadMore = function() {
 			var self = this
-				, request = fakeRequest('cards');
+				, request = fakeRequest('cards', 120);
 
 			request
 				.send()
