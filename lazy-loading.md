@@ -31,6 +31,14 @@ Some of the bits learned from the exercise:
     - Rarely did optimizations pay for themselves.  Part of this is due to the difficulty of talking to view-models from the "outside", as the desire to write declarative views means following a certain Knockout syntax pattern; A pattern in which it is difficult to manage individual scopes and therefore target specific changes. This meant that we had to: 1. trigger view-model changes manually (which itself is very confusingly implemented). 2. Use binding syntax and inefficiently calculate properties on each element (slide). 3. Use Hacks. 4. Go outside Knockout for DOM-stuff (which we avoided).
     - Deferring computation works, but it's tricky. Deferring expensive computation until transition end so as not to incur painting costs while transitioning is effective, but difficult to corridinate, and requires some creativity.
 
+## Lazy-loading techniques
+
+There are a few ways to interpret "lazy-loading", but in this context, we assumed it mean:
+
+1. Ability to load AJAX content performantly into mobile view-models 
+2. Ability to defer and dynamically load images and data that would otherwise slow down rendering.
+
+In other words keep things fast.
 
 ## KnockoutJS
 
